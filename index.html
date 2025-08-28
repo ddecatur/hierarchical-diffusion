@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Reusing Computation in Text-to-Image Diffusion for Efficient Generation of Image Sets</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    /* from https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css */
+    @font-face {
+      font-family: 'Academicons';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.eot') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.ttf') format('truetype'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.svg') format('svg');
+    }
+
+    .ai {
+      font-family: 'Academicons';
+      font-weight: 400;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+    }
+
+    .ai-arxiv:before {
+      content: "\e974";
+    }
+  </style>
+
+  <meta name="description" content="Reusing Computation in Text-to-Image Diffusion for Efficient Generation of Image Sets">
+  <meta name="keywords" content="diffusion, generative, efficient, images, 2d, compute, savings">
+  <meta property='og:title' content='Reusing Computation in Text-to-Image Diffusion for Efficient Generation of Image Sets' />
+  <meta property='og:url' content='https://ddecatur.github.io/shared-hierarchical-diffusion/' />
+  <meta property="og:type" content="website" />
+</head>
+
+<body>
+  <section class="intro" aria-label="intro">
+    <!-- <a href="https://3dl.cs.uchicago.edu" aria-label="3DL threedle home">
+      <div class="logobox">
+        <img src="https://threedle.github.io/geometry-in-style/assets/threedle-icon-160.png" alt="3DL threedle logo">
+      </div>
+    </a> -->
+    <div class="titlebox">
+      <h1>Reusing Computation in Text&#x2011;to&#x2011;Image Diffusion for Efficient Generation of Image Sets</h1>
+    </div>
+    <nav>
+      <a target="_blank" href="http://arxiv.org/pdf/" aria-label="paper pdf"><i
+          class="icon fas fa-file-pdf"></i>Paper</a>
+      <a target="_blank" href="http://arxiv.org/abs/"><i class="icon ai ai-arxiv"></i>arXiv</a>
+      <a target="_blank" href="https://github.com/ddecatur/shared-hierarchical-diffusion/" aria-label="code github"><i
+          class="icon fab fa-github"></i>Code</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+    <div class="authors" aria-label="authors">
+      <span><a target="_blank" href="https://ddecatur.github.io/">Dale Decatur</a><sup>1</sup></span>
+      <span><a target="_blank" href="https://imagine.enpc.fr/~groueixt/">Thibault Groueix</a><sup>2</sup></span>
+      <span><a target="_blank" href="https://yifita.netlify.app/">Yifan Wang</a><sup>2</sup></span>
+      <span><a target="_blank" href="https://people.cs.uchicago.edu/~ranahanocka/">Rana Hanocka</a><sup>1</sup></span>
+      <span><a target="_blank" href="http://vovakim.com/">Vova Kim</a><sup>2</sup></span>
+      <span><a target="_blank" href="http://mgadelha.me/">Matheus Gadelha</a><sup>2</sup></span>
+    </div>
+    <div class="affiliations" aria-label="affiliations"><sup>1</sup>University of Chicago, <sup>2</sup>Adobe Research</div>
+  </section>
+  <!-- <section class="teaser" aria-label="teaser">
+    <img class="mediumwidth blcent" src="assets/tree_traversal.png" alt="">
+    </div>
+    <p class="graybox">
+      <b>Our approach shares denoising steps across correlated prompts to enable more efficient generation of image sets.</b>
+      Text-to-image diffusion models enable high-quality image generation but are computationally expensive.
+      While prior work optimizes per-inference efficiency, we explore an orthogonal approach: reducing redundancy across correlated prompts.
+      Our method leverages the coarse-to-fine nature of diffusion models, where early denoising steps capture shared structures among similar prompts.
+      We propose a training-free approach that clusters prompts based on semantic similarity and shares computation in early diffusion steps.
+      <i>Left</i>: our approach relies on a tree structure obtained by running agglomerative clustering on a set of prompt embeddings.
+      Each node in the tree contains the average of the embeddings of its children, and a heterogeneity score \(c^{\text{score}}\) based on the distance between its two children.
+      To connect the tree hierarchy to the denoising steps, we design a function \(\phi\) taking as input the denoising step \(k\),
+      and controlling via its output and \(c^{\text{score}}\) which level to use in the tree for step \(k\).
+      <i>Right</i>: As a result, early diffusion steps are shared using the averaged embeddings, and the denoising steps gradually diverge to individual prompt embeddings,
+      resulting in saved computation while maintaining high image generation quality.
+    </p>
+  </section> -->
+  </section>
+  <section class="teaser" aria-label="teaser">
+    <img class="mediumwidth blcent" src="assets/teaser.png" alt="">
+    </div>
+    <p class="graybox">
+      <b>Our approach shares denoising steps across correlated prompts to enable more efficient generation of image sets.</b>
+      We leverage the coarse-to-fine nature of diffusion models, where early denoising steps capture shared structures among similar prompts.
+      We propose a training-free approach that clusters prompts based on semantic similarity and shares computation in early diffusion steps.
+      Experiments show that for models trained conditioned on image embeddings, our approach significantly reduces compute cost while improving image quality.
+    </p>
+  </section>
+  <section>
+    <h2>Method overview</h2>
+    <img class="mediumwidth blcent" src="assets/tree_traversal.png" alt="">
+    </div>
+    <p class="graybox">
+      <b>Overview of our shared hierarchical diffusion.</b>
+      <i>Left</i>: our approach relies on a tree structure obtained by running agglomerative clustering on a set of prompt embeddings.
+      Each node in the tree contains the average of the embeddings of its children, and a heterogeneity score \(c^{\text{score}}\) based on the distance between its two children.
+      To connect the tree hierarchy to the denoising steps, we design a function \(\phi\) taking as input the denoising step \(k\),
+      and controlling via its output and \(c^{\text{score}}\) which level to use in the tree for step \(k\).
+      <i>Right</i>: As a result, early diffusion steps are shared using the averaged embeddings, and the denoising steps gradually diverge to individual prompt embeddings,
+      resulting in saved computation while maintaining high image generation quality.
+    </p>
+  </section>
+  <section>
+    <h2>Qualitative comparison</h2>
+    <img class="mediumwidth blcent" src="assets/qualitative_comparison.png" alt="">
+    <p class="graybox">
+      <b>Comparison with standard diffusion inference.</b> We compare our approach (middle) with standard diffusion for a fixed compute budget of \(18\) steps (left)
+      and a full compute budget of \(40\) steps (right). For the fixed compute budget, our method produces higher quality images than the standard approach.
+      When compared to the \(40\) step compute budget, our approach uses significantly less steps while generating images of comparable, if not higher quality.
+    </p>
+  </section>
+  <section>
+    <h2>Coarse-to-fine generation</h2>
+    <img class="halfwidthflex blcent"
+      src="assets/coarse_to_fine.png" alt="">
+    <p class="graybox">
+      <b>Coarse-to-fine generation.</b>
+      We show intermediate latents from the diffusion process for Stable Diffusion 1.5 (top row), Stable UnCLIP (second row), Karlo (third row), and
+      Kandinsky (bottom row). The models trained without a text-to-image prior (Stable Diffusion and Stable UnCLIP) learn structural details and
+      high frequency features earlier on in the diffusion process. In contrast, Karlo and Kandinsky which were trained with the text-to-image prior, 
+      learn structural details later in  denoising  and are able to quickly add high frequency details in few steps, making them ideal for our compute
+      sharing approach.
+    </p>
+  </section>
+  <section>
+    <h2>Generation quality vs. compute</h2>
+    <img class="halfwidthflex blcent"
+      src="assets/compute_quality_tradeoff.png" alt="">
+    <p class="graybox">
+      <b>Generation quality at fixed compute budgets.</b>
+      We report VQA Score on our Prompt Template Dataset for both our method (orange) and the standard approach (blue) over various diffusion step budgets.
+      Note that at a \(40\)-step budget, our approach is identical to the standard approach. For all other fixed compute budgets, our method achieves higher VQA Scores
+      (a measure of generation quality) than the standard approach.
+    </p>
+  </section>
+  <section>
+    <h2>Compute savings</h2>
+    <img class="equationwidth blcent"
+      src="assets/results_table.svg" alt="">
+    <p class="graybox">
+      <b>Compute savings using our approach.</b>
+      We run our method on four diverse datasets ranging from most general (GenAI Bench) to more structured (Style Variations) and compute the VQA Score
+      for both our method and the standard approach. For each dataset, we report the number of images, the percentage of compute we save using our approach
+      relative to standard denoising, and the percentage of images on which our approach achieves a higher VQA Score. From the win percentages, we can see
+      that our method consistently produces comparable if not higher quality results to the standard approach, all while using significantly less compute
+      (as evidenced by the compute saved percentages).
+    </p>
+  </section>
+  <section>
+    <h2>Applications</h2>
+    <img class="almostfullwidth blcent"
+      src="assets/reuse_applications.png" alt="">
+    <p class="graybox">
+      <b>Applications.</b>
+      We show several specific applications of our method.
+      
+      <i>Left</i>: efficiently generating style variations on given input prompt.
+      We show a subset of 100 generated images, saving 74% of the equivalent compute for the standard approach.
+      
+      <i>Middle</i>: efficiently generating subject variations on given input prompt.
+      We show a subset of 500 generated images, saving 76% of the equivalent compute for the standard approach.
+
+      <i>Right</i>: virtual try-on. Our method generates a set of only 16 images, all containing the same subject, with various accessories,
+      saving 65.3% of the equivalent compute for the standard approach.
+    </p>
+  </section>
+  <section>
+    <h2>Acknowledgments</h2>
+    <p class="graybox">
+      We thank Richard Zhang for insights on evaluation metrics and more generally, the members of Adobe Research and 3DL for their insightful feedback.
+      This work was supported by Adobe Research and NSF grant 2140001.
+    </p>
+  </section>
+  <section><a id="bibtex"></a>
+    <h2>BibTeX</h2>
+    <pre class="graybox">@InProceedings{decatur2025reusing,
+  title={Reusing Computation in Text-to-Image Diffusion for Efficient Generation of Image Sets},
+  author={Dale Decatur and Thibault Groueix and Yifan Wang and Rana Hanocka and Vova Kim and Matheus Gadelha},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={},
+  year={2025}
+}</pre>
+  </section>
+  <script>
+    // upon load, restart and sync the other video in the pair
+    const vidloadsyncers = document.getElementsByClassName("vidloadsync");
+    for (const elem of vidloadsyncers) {
+      const srcshapeVid = elem.getElementsByClassName("srcshape").item(0);
+      const rsltshapeVid = elem.getElementsByClassName("rsltshape").item(0);
+      srcshapeVid?.addEventListener("loadeddata", e => {
+        if (rsltshapeVid) {
+          rsltshapeVid.currentTime = 0;
+        }
+      });
+      rsltshapeVid?.addEventListener("loadeddata", e => {
+        if (srcshapeVid) {
+          srcshapeVid.currentTime = 0;
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
