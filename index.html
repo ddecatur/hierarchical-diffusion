@@ -9,7 +9,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    /* from https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css */
     @font-face {
       font-family: 'Academicons';
       font-style: normal;
@@ -73,23 +72,6 @@
     </div>
     <div class="affiliations" aria-label="affiliations"><sup>1</sup>University of Chicago, <sup>2</sup>Adobe Research</div>
   </section>
-  <!-- <section class="teaser" aria-label="teaser">
-    <img class="mediumwidth blcent" src="assets/tree_traversal.png" alt="">
-    </div>
-    <p class="graybox">
-      <b>Our approach shares denoising steps across correlated prompts to enable more efficient generation of image sets.</b>
-      Text-to-image diffusion models enable high-quality image generation but are computationally expensive.
-      While prior work optimizes per-inference efficiency, we explore an orthogonal approach: reducing redundancy across correlated prompts.
-      Our method leverages the coarse-to-fine nature of diffusion models, where early denoising steps capture shared structures among similar prompts.
-      We propose a training-free approach that clusters prompts based on semantic similarity and shares computation in early diffusion steps.
-      <i>Left</i>: our approach relies on a tree structure obtained by running agglomerative clustering on a set of prompt embeddings.
-      Each node in the tree contains the average of the embeddings of its children, and a heterogeneity score \(c^{\text{score}}\) based on the distance between its two children.
-      To connect the tree hierarchy to the denoising steps, we design a function \(\phi\) taking as input the denoising step \(k\),
-      and controlling via its output and \(c^{\text{score}}\) which level to use in the tree for step \(k\).
-      <i>Right</i>: As a result, early diffusion steps are shared using the averaged embeddings, and the denoising steps gradually diverge to individual prompt embeddings,
-      resulting in saved computation while maintaining high image generation quality.
-    </p>
-  </section> -->
   </section>
   <section class="teaser" aria-label="teaser">
     <img class="mediumwidth blcent" src="assets/teaser.png" alt="">
