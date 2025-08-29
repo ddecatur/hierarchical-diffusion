@@ -2,6 +2,6 @@
 
 Come coming soon!
 
-\[[Paper](http://arxiv.org/abs/)\] \[[Project Page](https://ddecatur.github.io/hierarchical-diffusion/)\]
+\[[Paper](http://arxiv.org/abs/2508.21032)\] \[[Project Page](https://ddecatur.github.io/hierarchical-diffusion/)\]
 
 ![teaser](https://github.com/ddecatur/hierarchical-diffusion/raw/site/assets/tree_traversal.png)
