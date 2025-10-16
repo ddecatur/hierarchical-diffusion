@@ -1,0 +1,6 @@
+diffusers
+transformers[sentencepiece]
+accelerate
+matplotlib
+scipy
+pyrallis
