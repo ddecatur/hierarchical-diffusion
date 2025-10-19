@@ -1,4 +1,5 @@
 # Reusing Computation in Text-to-Image Diffusion for Efficient Generation of Image Sets [ICCV 2025]
+Authors: *[Dale Decatur](https://ddecatur.github.io/), [Thibault Groueix](https://imagine.enpc.fr/~groueixt/), [Yifan Wang](https://yifita.netlify.app/), [Rana Hanocka](https://people.cs.uchicago.edu/~ranahanocka/), [Vladimir G. Kim](http://vovakim.com/), [Matheus Gadelha](http://mgadelha.me/)*
 
 \[[Paper](http://arxiv.org/abs/2508.21032)\] \[[Project Page](https://ddecatur.github.io/hierarchical-diffusion/)\]
 
@@ -61,7 +62,7 @@ $\begin{equation}
 \end{equation}$
 
 ## Reproduce paper results
-To run our method on the datasets we use in the paper (`animals`, `genai_bench`, `prompt_templates`, and `style_variations`), pass the dataset name in the `--prompt_dataset` command line argument or directly set the `prompt_dataset` field in `config.py`. For table $4$, we use the following commands. Note, we have refactored our codebase since submission and thus, even with the same seed, the results might differ slightly, but should be qualitatively the same.
+To run our method on the datasets we use in the paper (`animals`, `genai_bench`, `prompt_templates`, and `style_variations`), pass the dataset name in the `--prompt_dataset` command line argument or directly set the `prompt_dataset` field in `config.py`. For table $1$, we use the following commands.
 ```
 python main.py --prompt_dataset genai_bench --exp_name genai_bench --tau 1.0
 python main.py --prompt_dataset prompt_templates --exp_name prompt_templates --tau 1.0
